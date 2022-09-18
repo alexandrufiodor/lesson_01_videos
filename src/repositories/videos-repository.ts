@@ -1,19 +1,14 @@
 export const videos = [{
-    id: 1,
-    title: 'Test Video 1',
-    author: 'it-incubator.eu'
-}, {
-    id: 2,
-    title: 'Test Video 2',
-    author: 'it-incubator.eu'
-}, {
-    id: 3,
-    title: 'Test Video 3',
-    author: 'it-incubator.eu'
-}, {
-    id: 4,
-    title: 'Test Video 4',
-    author: 'it-incubator.eu'
+    id: 0,
+    title: "Video 1",
+    author: "Author 1",
+    canBeDownloaded: true,
+    minAgeRestriction: 18,
+    createdAt: "2022-09-18T20:21:41.655Z",
+    publicationDate: "2022-09-18T20:21:41.655Z",
+    availableResolutions: [
+        "P144"
+    ]
 }]
 
 export const videosRepository = {
@@ -40,15 +35,31 @@ export const videosRepository = {
         }
         return false
     },
-    addNewVideo(title: string) {
-        const newVideo = {id: +(new Date()), title, author: 'it-incubator.eu'}
+    addNewVideo(title: string, author: string, availableResolutions: Array<string>, canBeDownloaded: boolean, minAgeRestriction: number | null) {
+        const newVideo = {
+            id: +(new Date()),
+            title,
+            author,
+            canBeDownloaded: canBeDownloaded,
+            minAgeRestriction: minAgeRestriction,
+            createdAt: (new Date()).toString(),
+            publicationDate: (new Date()).toString(),
+            availableResolutions: availableResolutions || []
+        }
+        // @ts-ignore
         videos.push(newVideo)
         return newVideo
     },
-    updateVideo(id: number, title: string) {
+    updateVideo(id: number, title: string, author: string, availableResolutions: Array<string>, canBeDownloaded: boolean, minAgeRestriction: number | null) {
         const findVideo = videos.find(item => item.id === id)
         if (findVideo) {
             findVideo.title = title
+            findVideo.author = author
+            findVideo.availableResolutions = availableResolutions
+            findVideo.canBeDownloaded = canBeDownloaded
+            // @ts-ignore
+            findVideo.minAgeRestriction = minAgeRestriction
+            findVideo.publicationDate = (new Date()).toString()
             return true
         }
         return false

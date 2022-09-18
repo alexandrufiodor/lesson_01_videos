@@ -27,12 +27,12 @@ videosRouter.delete(`/:id`, (req: Request, res: Response) => {
     return res.send(404)
 })
 videosRouter.post(`/`, titleValidation, inputValidationMiddleware, (req: Request, res: Response) => {
-    const newVideo = videosRepository.addNewVideo(req.body.title)
+    const newVideo = videosRepository.addNewVideo(req.body.title, req.body.author, req.body.availableResolutions=[], req.body.canBeDownloaded=false, req.body.minAgeRestriction=null)
     res.status(201).send(newVideo)
 
 })
 videosRouter.put(`/:id`, titleValidation, inputValidationMiddleware, (req: Request, res: Response) => {
-    const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title )
+    const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title, req.body.author, req.body.availableResolutions=[], req.body.canBeDownloaded=false, req.body.minAgeRestriction = null )
     if (isUpdated) {
         const video = videosRepository.findVideoById(+req.params.id)
         res.status(201).send(video)
