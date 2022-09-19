@@ -12,6 +12,9 @@ export const videos = [{
 }]
 
 export const videosRepository = {
+    deleteAll() {
+        return videos.length = 0
+    },
     findVideos(title: string | null | undefined) {
         if (title) {
             const filteredVideos = videos.find(item => item.title.indexOf(title))
@@ -35,27 +38,27 @@ export const videosRepository = {
         }
         return false
     },
-    addNewVideo(title: string, author: string, availableResolutions: Array<string>, canBeDownloaded: boolean, minAgeRestriction: number | null) {
+    addNewVideo(title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null) {
         const newVideo = {
             id: +(new Date()),
             title,
             author,
             canBeDownloaded: canBeDownloaded,
+            availableResolutions:availableResolutions || [],
             minAgeRestriction: minAgeRestriction,
             createdAt: (new Date()).toString(),
             publicationDate: (new Date()).toString(),
-            availableResolutions: availableResolutions || []
         }
         // @ts-ignore
         videos.push(newVideo)
         return newVideo
     },
-    updateVideo(id: number, title: string, author: string, availableResolutions: Array<string>, canBeDownloaded: boolean, minAgeRestriction: number | null) {
+    updateVideo(id: number, title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null) {
         const findVideo = videos.find(item => item.id === id)
         if (findVideo) {
             findVideo.title = title
             findVideo.author = author
-            findVideo.availableResolutions = availableResolutions
+            findVideo.availableResolutions = availableResolutions || []
             findVideo.canBeDownloaded = canBeDownloaded
             // @ts-ignore
             findVideo.minAgeRestriction = minAgeRestriction
