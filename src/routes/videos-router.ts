@@ -11,12 +11,12 @@ const minAgeRestriction = body('minAgeRestriction').isInt({ min: 1, max: 18 }).w
 
 videosRouter.get(`/`, (req: Request, res: Response) => {
     const foundedVideos = videosRepository.findVideos(req.query.title?.toString())
-    res.send(foundedVideos)
+    res.status(200).send(foundedVideos)
 })
 videosRouter.get(`/:id`, (req: Request, res: Response) => {
     const findVideo = videosRepository.findVideoById(+req.params.id)
     if (findVideo) {
-        res.send(findVideo)
+        res.status(200).send(findVideo)
         return
     }
     res.send(404)
@@ -35,8 +35,8 @@ videosRouter.post(`/`, titleValidation, minAgeRestriction, authorValidation, val
 videosRouter.put(`/:id`, titleValidation, minAgeRestriction, authorValidation, validationMiddleware, (req: Request, res: Response) => {
     const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title, req.body.author, req.body.availableResolutions || [], req.body.canBeDownloaded || false, req.body.minAgeRestriction || null )
     if (isUpdated) {
-        const video = videosRepository.findVideoById(+req.params.id)
-        res.status(201).send(video)
+        // const video = videosRepository.findVideoById(+req.params.id)
+        res.status(204)
         return
     }
     res.send(404)
