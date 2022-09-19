@@ -6,11 +6,9 @@ import {body} from "express-validator";
 export const videosRouter = Router()
 
 const titleValidation = body('title').exists().withMessage('Title is required').isString().withMessage('Title should be a string');
+const authorValidation = body('author').exists().withMessage('Author is required').isString().withMessage('Author should be a string');
+const minAgeRestriction = body('minAgeRestriction').isInt({ min: 1, max: 18 }).withMessage('minAgeRestriction value must be between 1 to 18').optional();
 
-videosRouter.delete(`/`, (req: Request, res: Response) => {
-    videosRepository.deleteAll()
-    res.send(204)
-})
 videosRouter.get(`/`, (req: Request, res: Response) => {
     const foundedVideos = videosRepository.findVideos(req.query.title?.toString())
     res.send(foundedVideos)
@@ -30,13 +28,12 @@ videosRouter.delete(`/:id`, (req: Request, res: Response) => {
     }
     return res.send(404)
 })
-videosRouter.post(`/`, titleValidation, validationMiddleware, (req: Request, res: Response) => {
-    const newVideo = videosRepository.addNewVideo(req.body.title, req.body.author, req.body.availableResolutions, req.body.canBeDownloaded=false, req.body.minAgeRestriction=null)
+videosRouter.post(`/`, titleValidation, minAgeRestriction, authorValidation, validationMiddleware, (req: Request, res: Response) => {
+    const newVideo = videosRepository.addNewVideo(req.body.title, req.body.author, req.body.availableResolutions || [], req.body.canBeDownloaded || false, req.body.minAgeRestriction || null)
     res.status(201).send(newVideo)
-
 })
-videosRouter.put(`/:id`, titleValidation, validationMiddleware, (req: Request, res: Response) => {
-    const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title, req.body.author, req.body.availableResolutions, req.body.canBeDownloaded=false, req.body.minAgeRestriction = null )
+videosRouter.put(`/:id`, titleValidation, minAgeRestriction, authorValidation, validationMiddleware, (req: Request, res: Response) => {
+    const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title, req.body.author, req.body.availableResolutions || [], req.body.canBeDownloaded || false, req.body.minAgeRestriction || null )
     if (isUpdated) {
         const video = videosRepository.findVideoById(+req.params.id)
         res.status(201).send(video)

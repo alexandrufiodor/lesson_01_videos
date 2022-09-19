@@ -4,8 +4,8 @@ export const videos = [{
     author: "Author 1",
     canBeDownloaded: true,
     minAgeRestriction: 18,
-    createdAt: "2022-09-18T20:21:41.655Z",
-    publicationDate: "2022-09-18T20:21:41.655Z",
+    createdAt: new Date("2022-09-18T20:21:41.655Z"),
+    publicationDate: new Date("2022-09-18T20:21:41.655Z"),
     availableResolutions: [
         "P144"
     ]
@@ -39,21 +39,25 @@ export const videosRepository = {
         return false
     },
     addNewVideo(title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null) {
+        const publicationDate = new Date();
+        publicationDate.setDate(publicationDate.getDate() + 1);
         const newVideo = {
             id: +(new Date()),
             title,
             author,
             canBeDownloaded: canBeDownloaded,
-            availableResolutions:availableResolutions || [],
+            availableResolutions:availableResolutions,
             minAgeRestriction: minAgeRestriction,
-            createdAt: (new Date()).toString(),
-            publicationDate: (new Date()).toString(),
+            createdAt: new Date(),
+            publicationDate: publicationDate,
         }
         // @ts-ignore
         videos.push(newVideo)
         return newVideo
     },
     updateVideo(id: number, title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null) {
+        const publicationDate = new Date();
+        publicationDate.setDate(publicationDate.getDate() + 1);
         const findVideo = videos.find(item => item.id === id)
         if (findVideo) {
             findVideo.title = title
@@ -62,7 +66,7 @@ export const videosRepository = {
             findVideo.canBeDownloaded = canBeDownloaded
             // @ts-ignore
             findVideo.minAgeRestriction = minAgeRestriction
-            findVideo.publicationDate = (new Date()).toString()
+            findVideo.publicationDate = publicationDate
             return true
         }
         return false
