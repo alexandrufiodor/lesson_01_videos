@@ -4,8 +4,8 @@ export const videos = [{
     author: "Author 1",
     canBeDownloaded: true,
     minAgeRestriction: 18,
-    createdAt: new Date("2022-09-18T20:21:41.655Z"),
-    publicationDate: new Date("2022-09-18T20:21:41.655Z"),
+    createdAt: "2022-09-18T20:21:41.655Z",
+    publicationDate: "2022-09-18T20:21:41.655Z",
     availableResolutions: [
         "P144"
     ]
@@ -49,15 +49,15 @@ export const videosRepository = {
             availableResolutions:availableResolutions,
             minAgeRestriction: minAgeRestriction,
             createdAt: new Date(),
-            publicationDate: publicationDate,
+            publicationDate: publicationDate.toString(),
         }
         // @ts-ignore
         videos.push(newVideo)
         return newVideo
     },
-    updateVideo(id: number, title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null) {
-        const publicationDate = new Date();
-        // publicationDate.setDate(publicationDate.getDate() + 1);
+    updateVideo(id: number, title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null, publicationDate: string) {
+        const newPublicationDate = new Date();
+        newPublicationDate.setDate(newPublicationDate.getDate() + 1);
         const findVideo = videos.find(item => item.id === +id)
         if (findVideo) {
             findVideo.title = title
@@ -66,7 +66,7 @@ export const videosRepository = {
             findVideo.canBeDownloaded = canBeDownloaded
             // @ts-ignore
             findVideo.minAgeRestriction = minAgeRestriction
-            findVideo.publicationDate = publicationDate
+            findVideo.publicationDate = publicationDate || newPublicationDate.toString()
             return true
         }
         return false

@@ -52,7 +52,7 @@ videosRouter.post(`/`, titleValidation, minAgeRestriction, authorValidation, can
     res.status(201).send(newVideo)
 })
 videosRouter.put(`/:id`, titleValidation, minAgeRestriction, authorValidation, canBeDownloadedValidation, publicationDateValidation, validationMiddleware, (req: Request, res: Response) => {
-    const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title, req.body.author, req.body.availableResolutions || [], req.body.canBeDownloaded || false, req.body.minAgeRestriction || null )
+    const isUpdated = videosRepository.updateVideo(+req.params.id, req.body.title, req.body.author, req.body.availableResolutions || [], req.body.canBeDownloaded || false, req.body.minAgeRestriction || null, req.body.publicationDate )
     if (req.body.availableResolutions && availableResolutionsValidation(req.body.availableResolutions)) {
         res.status(400).send(availableResolutionsValidation(req.body.availableResolutions))
         return
