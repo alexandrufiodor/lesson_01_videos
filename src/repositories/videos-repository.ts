@@ -49,7 +49,7 @@ export const videosRepository = {
             availableResolutions:availableResolutions,
             minAgeRestriction: minAgeRestriction,
             createdAt: new Date(),
-            publicationDate: publicationDate.toString(),
+            publicationDate: publicationDate,
         }
         // @ts-ignore
         videos.push(newVideo)
@@ -66,7 +66,8 @@ export const videosRepository = {
             findVideo.canBeDownloaded = canBeDownloaded
             // @ts-ignore
             findVideo.minAgeRestriction = minAgeRestriction
-            findVideo.publicationDate = publicationDate || newPublicationDate.toString()
+            // @ts-ignore
+            findVideo.publicationDate = publicationDate || newPublicationDate
             return true
         }
         return false
