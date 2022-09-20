@@ -14,10 +14,10 @@ const canBeDownloadedValidation = body('canBeDownloaded').isBoolean().withMessag
 const availableResolutionsValidation = (resolutions: string[]) => {
     for (let i of resolutions) {
         if(!availableResolutions.includes(i)){
-            return {errorsMessages: {
+            return {errorsMessages: [{
                     message: 'availableResolutions should be include ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]',
                     field: 'availableResolutions'
-                }}
+                }]}
         }
     }
     return
