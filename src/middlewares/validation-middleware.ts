@@ -10,7 +10,7 @@ export const validationMiddleware = (req: Request, res: Response, next: NextFunc
                 field: e.param
             }
         })
-        return res.status(400).json({ errorsMessages: error, resultCode: 1});
+        return res.status(400).json({ errorsMessages: error});
     }
     next()
 }
