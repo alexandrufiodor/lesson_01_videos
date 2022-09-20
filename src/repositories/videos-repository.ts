@@ -58,7 +58,7 @@ export const videosRepository = {
     updateVideo(id: number, title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean, minAgeRestriction: number | null) {
         const publicationDate = new Date();
         publicationDate.setDate(publicationDate.getDate() + 1);
-        const findVideo = videos.find(item => item.id === id)
+        const findVideo = videos.find(item => item.id === +id)
         if (findVideo) {
             findVideo.title = title
             findVideo.author = author
