@@ -7,9 +7,9 @@ import {posts, postsRepository} from "../../repositories/ht_02/posts-repository"
 import {blogs, blogsRepository} from "../../repositories/ht_02/blogs-repository";
 
 export const postsRouter = Router()
-const titleValidation = body('title').exists().withMessage('Title is required').isString().withMessage('Title should be a string').trim().isLength({max: 30}).withMessage('Title should be maxim 30 length');
-const contentValidation = body('content').exists().withMessage('Content is required').isString().withMessage('Content should be a string').trim().isLength({max: 1000}).withMessage('Content should be maxim 1000 length');
-const shortDescriptionValidation = body('shortDescription').exists().withMessage('Description is required').isString().withMessage('Name should be a string').trim().isLength({max: 100}).withMessage('Name should be maxim 100 length');
+const titleValidation = body('title').exists().withMessage('Title is required').isString().withMessage('Title should be a string').trim().isLength({min: 1, max: 30}).withMessage('Title should be maxim 30 length');
+const contentValidation = body('content').exists().withMessage('Content is required').isString().withMessage('Content should be a string').trim().isLength({min: 1, max: 1000}).withMessage('Content should be maxim 1000 length');
+const shortDescriptionValidation = body('shortDescription').exists().withMessage('Description is required').isString().withMessage('Name should be a string').trim().isLength({min: 1, max: 100}).withMessage('Name should be maxim 100 length');
 const blogIdValidation = body('blogId').exists().withMessage('Blog id is required').isString().withMessage('Blog Id should be a string').isIn(blogs).withMessage('Blog Id not founded');
 const blogIdNotFoundValidation = body("blogId").custom((blogId: string) => {
     if (blogId?.length > 0) {
