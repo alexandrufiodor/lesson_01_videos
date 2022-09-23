@@ -10,6 +10,12 @@ const titleValidation = body('title').exists().withMessage('Title is required').
 const contentValidation = body('content').exists().withMessage('Content is required').isString().withMessage('Content should be a string').trim().isLength({min: 1, max: 1000}).withMessage('Content should be minim 1 and maxim 1000 length');
 const shortDescriptionValidation = body('shortDescription').exists().withMessage('Description is required').isString().withMessage('Name should be a string').trim().isLength({min: 1, max: 100}).withMessage('Name should be minim 1 and maxim 100 length');
 const blogIdValidation = body('blogId').exists().withMessage('Blog id is required').isString().withMessage('Blog Id should be a string');
+const blogIdNotFoundValidation = () => {
+    return {errorsMessages: [{
+            message: 'Blog Id not founded',
+            field: 'blogId'
+        }]}
+}
 
 postsRouter.get(`/`, (req: Request, res: Response) => {
     const foundedPosts = postsRepository.findPosts(req.query.title?.toString())
@@ -32,7 +38,13 @@ postsRouter.delete(`/:id`, authorization(), (req: Request, res: Response) => {
 })
 postsRouter.post(`/`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdValidation, validationMiddleware, (req: Request, res: Response) => {
     const newPost = postsRepository.addNewPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
-    res.status(201).send(newPost)
+    if (newPost) {
+        res.status(201).send(newPost)
+        return
+    } else {
+        res.status(400).send(blogIdNotFoundValidation())
+    }
+
 })
 postsRouter.put(`/:id`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdValidation, validationMiddleware, (req: Request, res: Response) => {
     const isUpdated = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
