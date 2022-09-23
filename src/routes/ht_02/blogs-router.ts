@@ -27,11 +27,11 @@ blogsRouter.delete(`/:id`, authorization(), (req: Request, res: Response) => {
     }
     return res.send(404)
 })
-blogsRouter.post(`/`, nameValidation, validationMiddleware, authorization(), (req: Request, res: Response) => {
+blogsRouter.post(`/`, authorization(), nameValidation, validationMiddleware, (req: Request, res: Response) => {
     const newBlog = blogsRepository.addNewBlog(req.body.name, req.body.youtubeUrl)
     res.status(201).send(newBlog)
 })
-blogsRouter.put(`/:id`, nameValidation, validationMiddleware, authorization(), (req: Request, res: Response) => {
+blogsRouter.put(`/:id`, authorization(), nameValidation, validationMiddleware, (req: Request, res: Response) => {
     const isUpdated = blogsRepository.updateBlog(req.params.id, req.body.name, req.body.youtubeUrl)
     if (isUpdated) {
         res.status(204).send(isUpdated)
