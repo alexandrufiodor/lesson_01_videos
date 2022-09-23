@@ -30,11 +30,11 @@ postsRouter.delete(`/:id`, authorization(), (req: Request, res: Response) => {
     }
     return res.send(404)
 })
-postsRouter.post(`/`, titleValidation, contentValidation, shortDescriptionValidation, blogIdValidation, validationMiddleware, authorization(), (req: Request, res: Response) => {
+postsRouter.post(`/`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdValidation, validationMiddleware, (req: Request, res: Response) => {
     const newPost = postsRepository.addNewPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
     res.status(201).send(newPost)
 })
-postsRouter.put(`/:id`, titleValidation, contentValidation, shortDescriptionValidation, blogIdValidation, validationMiddleware, authorization(), (req: Request, res: Response) => {
+postsRouter.put(`/:id`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdValidation, validationMiddleware, (req: Request, res: Response) => {
     const isUpdated = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
     if (isUpdated) {
         res.status(204).send(isUpdated)
