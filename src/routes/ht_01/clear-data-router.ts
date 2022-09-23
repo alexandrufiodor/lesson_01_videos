@@ -1,11 +1,9 @@
 import {Request, Response, Router} from "express";
-import {blogsRepository} from "../../repositories/ht_02/blogs-repository";
-import {postsRepository} from "../../repositories/ht_02/posts-repository";
+import {videosRepository} from "../../repositories/ht_01/videos-repository";
 
 export const dataRouter = Router()
 
 dataRouter.delete(`/all-data`, (req: Request, res: Response) => {
-    blogsRepository.deleteAll()
-    postsRepository.deleteAll()
+    videosRepository.deleteAll()
     res.send(204)
 })
