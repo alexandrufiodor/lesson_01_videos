@@ -1,12 +1,13 @@
 import {Request, Response, Router} from "express";
-import {validationMiddleware} from "../../middlewares/validation-middleware";
 import {body} from "express-validator";
+
+import {validationMiddleware} from "../../middlewares/validation-middleware";
 import {blogsRepository} from "../../repositories/ht_02/blogs-repository";
 import {authorization} from "./users";
 
 export const blogsRouter = Router()
-const nameValidation = body('name').exists().withMessage('Name is required').isString().withMessage('Name should be a string').trim().isLength({min: 1, max: 15}).withMessage('Name should be maxim 15 length');
-const urlValidation = body('youtubeUrl').exists().withMessage('Youtube Url is required').isString().withMessage('Youtube Url should be a string').trim().isLength({min: 1, max: 100}).withMessage('Youtube Url should be maxim 100 length').isURL().withMessage('This is not url format');
+const nameValidation = body('name').exists().withMessage('Name is required').isString().withMessage('Name should be a string').trim().isLength({min: 1, max: 15}).withMessage('Name should be minim 1 and maxim 15 length');
+const urlValidation = body('youtubeUrl').exists().withMessage('Youtube url is required').isString().withMessage('Youtube url should be a string').trim().isLength({min: 1, max: 100}).withMessage('Youtube url should be minim 1 and maxim 100 length').isURL().withMessage('This is not url format');
 
 blogsRouter.get(`/`, (req: Request, res: Response) => {
     const foundedBlogs = blogsRepository.findBlogs(req.query.name?.toString())

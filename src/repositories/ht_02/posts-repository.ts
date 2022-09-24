@@ -1,4 +1,4 @@
-import {blogs} from "./blogs-repository";
+import {blogsRepository} from "./blogs-repository";
 
 const postsType = {
     id: "string",
@@ -38,7 +38,7 @@ export const postsRepository = {
         return false
     },
     addNewPost(title: string, shortDescription: string, content: 'string', blogId: 'string') {
-        const findBlog = blogs.find(item => item.id === blogId)
+        const findBlog = blogsRepository.findBlogById(blogId)
         if (findBlog) {
             const newPost = {
                 id: (+(new Date())).toString(),
@@ -51,23 +51,19 @@ export const postsRepository = {
             posts.push(newPost)
             return newPost
         }
-        return null
     },
     updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string) {
-        if (blogId) {
-            const findBlog = blogs.find(item => item.id === blogId)
-            if (findBlog) {
-                const findPost = posts.find(item => item.id === id)
-                if (findPost) {
-                    findPost.title = title
-                    findPost.shortDescription = shortDescription,
-                        findPost.content = content,
-                        findPost.blogId = blogId,
-                        findPost.blogName = findBlog.name
-                    return true
-                }
-            } return false
-        }
-        return false
+        const findBlog = blogsRepository.findBlogById(blogId)
+        if (findBlog) {
+            const findPost = postsRepository.findPostById(id)
+            if (findPost) {
+                findPost.title = title
+                findPost.shortDescription = shortDescription
+                findPost.content = content
+                findPost.blogId = blogId
+                findPost.blogName = findBlog.name
+                return true
+            }
+        } return false
     }
 }

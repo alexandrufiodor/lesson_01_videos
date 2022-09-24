@@ -43,7 +43,7 @@ export const blogsRepository = {
         return newBlog
     },
     updateBlog(id: string, name: string, youtubeUrl: string) {
-        const findBlog = blogs.find(item => item.id === id)
+        const findBlog = blogsRepository.findBlogById(id)
         if (findBlog) {
             findBlog.name = name
             findBlog.youtubeUrl = youtubeUrl
