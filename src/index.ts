@@ -6,6 +6,7 @@ import {blogsRouter} from "./routes/ht_02/blogs-router";
 import {postsRouter} from "./routes/ht_02/posts-router";
 import {blogsRouter as blogsRouter_03} from "./routes/ht_03/blogs-router";
 import {postsRouter as postsRouter_03} from "./routes/ht_03/posts-router";
+import {dataRouter as dataRouter_03} from "./routes/ht_03/clear-data-router";
 import {runDb} from "./repositories/ht_03/db";
 
 export const app = express()
@@ -23,7 +24,7 @@ app.use('/ht_02/api/testing', dataRouter)
 
 app.use('/ht_03/api/blogs', blogsRouter_03)
 app.use('/ht_03/api/posts', postsRouter_03)
-app.use('/ht_03/api/testing', dataRouter)
+app.use('/ht_03/api/testing', dataRouter_03)
 
 const startApp = async () => {
     await runDb();
