@@ -5,7 +5,7 @@ import {postsType} from "./posts-repository";
 const mongoUri = "mongodb+srv://admin:<qwerty123>@cluster0.5enq2df.mongodb.net/test";
 
 export const client = new MongoClient(mongoUri);
-const db = client.db("ht_03")
+const db = client.db("test")
 export const blogsCollection = db.collection<blogsType>('blogs')
 export const postsCollection = db.collection<postsType>('posts')
 
