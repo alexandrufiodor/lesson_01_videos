@@ -27,30 +27,31 @@ postsRouter.get(`/`, async (req: Request, res: Response) => {
     res.status(200).send(foundedPosts)
 })
 postsRouter.get(`/:id`, async (req: Request, res: Response) => {
-    const findPost = await postsRepository.findPostById(req.params.id)
+    const findPost = await postsRepository.findPostById(req.params.id);
     if (findPost) {
-        res.status(200).send(findPost)
-        return
+        res.status(200).send(findPost);
+        return;
     }
-    res.send(404)
+    res.sendStatus(404);
 })
 postsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) => {
     const isRemoved = await postsRepository.removePost(req.params.id)
     if (isRemoved) {
-        res.send(204)
+        res.sendStatus(204);
+        return;
     }
-    return res.send(404)
+    res.sendStatus(404);
 })
 postsRouter.post(`/`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdNotFoundValidation, validationMiddleware, async (req: Request, res: Response) => {
     const newPost = await postsRepository.addNewPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
-    res.status(201).send(newPost)
-    return
+    res.status(201).send(newPost);
+    return;
 })
 postsRouter.put(`/:id`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdNotFoundValidation, validationMiddleware, async (req: Request, res: Response) => {
     const isUpdated = await postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
     if (isUpdated) {
-        res.status(204).send(isUpdated)
-        return
+        res.status(204).send(isUpdated);
+        return;
     }
-    res.send(404)
+    res.sendStatus(404);
 })
