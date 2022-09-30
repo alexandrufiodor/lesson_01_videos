@@ -26,8 +26,9 @@ blogsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) 
     const isRemoved = await blogsRepository.removeBlog(req.params.id)
     if (isRemoved) {
         res.send(204).send('No Content')
+        return;
     }
-    return res.sendStatus(404)
+    res.sendStatus(404)
 })
 blogsRouter.post(`/`, authorization(), nameValidation, urlValidation, validationMiddleware, async (req: Request, res: Response) => {
     const newBlog = await blogsRepository.addNewBlog(req.body.name, req.body.youtubeUrl)
