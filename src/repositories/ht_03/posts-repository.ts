@@ -48,7 +48,7 @@ export const postsRepository = {
                 blogName: blog.name,
                 createdAt: new Date,
             }
-            const result = await postsCollection.insertOne(newPost)
+            await postsCollection.insertOne(newPost)
             return newPost
         } return null
     },

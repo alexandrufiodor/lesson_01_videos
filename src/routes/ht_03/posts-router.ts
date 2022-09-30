@@ -37,7 +37,7 @@ postsRouter.get(`/:id`, async (req: Request, res: Response) => {
 postsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) => {
     const isRemoved = await postsRepository.removePost(req.params.id)
     if (isRemoved) {
-        res.sendStatus(204);
+        res.status(204).send('No Content');
         return;
     }
     res.sendStatus(404);
