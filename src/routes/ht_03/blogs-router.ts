@@ -25,7 +25,7 @@ blogsRouter.get(`/:id`, async (req: Request, res: Response) => {
 blogsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) => {
     const isRemoved = await blogsRepository.removeBlog(req.params.id)
     if (isRemoved) {
-        res.send(204).send('No Content')
+        res.status(204).send('No Content')
         return;
     }
     res.sendStatus(404)
