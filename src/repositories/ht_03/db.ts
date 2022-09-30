@@ -2,7 +2,7 @@ import {MongoClient} from "mongodb";
 import {blogsType} from "./blogs-repository";
 import {postsType} from "./posts-repository";
 
-const mongoUri = process.env.mongoURI || "mongodb://0.0.0.0:27017";
+const mongoUri = "mongodb+srv://admin:<qwerty123>@cluster0.5enq2df.mongodb.net/test";
 
 export const client = new MongoClient(mongoUri);
 const db = client.db("ht_03")
