@@ -1,13 +1,15 @@
 import {MongoClient} from "mongodb";
 import {blogsType} from "./blogs-repository";
 import {postsType} from "./posts-repository";
+import * as mongoose from "mongoose";
 
-const mongoUri = "mongodb+srv://admin:<qwerty123>@cluster0.5enq2df.mongodb.net/test";
+const mongoUri = 'mongodb+srv://admin:DjdF0RnhOaJ2oFsT@cluster0.5enq2df.mongodb.net/test';
 
 export const client = new MongoClient(mongoUri);
-const db = client.db("test")
+const db = client.db("ht_03")
 export const blogsCollection = db.collection<blogsType>('blogs')
 export const postsCollection = db.collection<postsType>('posts')
+
 
 export async function runDb() {
     try {
