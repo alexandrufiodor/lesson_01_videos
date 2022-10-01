@@ -1,8 +1,8 @@
 import {blogsRepository} from "./blogs-repository";
 import {blogsCollection, postsCollection} from "./db";
+import {ObjectId} from "mongodb";
 
 export type postsType = {
-    id: string,
     title: string,
     shortDescription: string,
     content: string,
@@ -26,21 +26,20 @@ export const postsRepository = {
         return postsCollection.find(filter).toArray()
     },
     async findPostById(id: string): Promise<postsType | null> {
-        const result = await postsCollection.findOne({id})
+        const result = await postsCollection.findOne({_id: new ObjectId(id)})
         if (result) {
             return result
         }
         return null
     },
     async removePost(id: string): Promise<boolean> {
-        const result = await postsCollection.deleteOne({id})
+        const result = await postsCollection.deleteOne({_id: new ObjectId(id)})
         return result.deletedCount === 1
     },
     async addNewPost(title: string, shortDescription: string, content: string, blogId: string): Promise<postsType | null> {
         const blog = await blogsRepository.findBlogById(blogId)
         if (blog) {
             const newPost = {
-                id: (+(new Date)).toString(),
                 title,
                 shortDescription,
                 content,
@@ -55,7 +54,7 @@ export const postsRepository = {
     async updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string): Promise<boolean | null> {
         const blog = await blogsRepository.findBlogById(blogId)
         if (blog) {
-            const result = await postsCollection.updateOne({id}, {$set: {title, shortDescription, content, blogId, blogName: blog.name}})
+            const result = await postsCollection.updateOne({_id: new ObjectId(id)}, {$set: {title, shortDescription, content, blogId, blogName: blog.name}})
             return result.matchedCount === 1
         } return null
     }
