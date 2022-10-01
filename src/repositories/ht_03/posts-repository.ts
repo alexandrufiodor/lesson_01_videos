@@ -36,10 +36,11 @@ export const postsRepository = {
         const result = await postsCollection.deleteOne({id})
         return result.deletedCount === 1
     },
+    // @ts-ignore
     async addNewPost(title: string, shortDescription: string, content: string, blogId: string): Promise<postsType | null> {
         const blog = await blogsRepository.findBlogById(blogId)
         if (blog) {
-            const newPost = {
+            let newPost = {
                 id: (+(new Date)).toString(),
                 title,
                 shortDescription,
@@ -49,7 +50,11 @@ export const postsRepository = {
                 createdAt: new Date,
             }
             const result = await postsCollection.insertOne(newPost)
-            return newPost
+            if (result) {
+                // @ts-ignore
+                newPost = { _id: result.insertedId,...newBlog}
+                return newPost
+            }
         } return null
     },
     async updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string): Promise<boolean | null> {
