@@ -32,22 +32,15 @@ export const blogsRepository = {
         const result = await blogsCollection.deleteOne({id})
         return result.deletedCount === 1
     },
-    // @ts-ignore
     async addNewBlog(name: string, youtubeUrl: string): Promise<blogsType> {
-        let newBlog = {
-            createdAt: new Date,
+        const newBlog = {
             id: (+(new Date)).toString(),
             name,
             youtubeUrl,
+            createdAt: new Date,
         }
-
-        const result = await blogsCollection.insertOne(newBlog);
-        if (result) {
-            // @ts-ignore
-            newBlog = { _id: result.insertedId,...newBlog}
-            return newBlog
-        }
-
+        const result = await blogsCollection.insertOne(newBlog)
+        return newBlog
     },
     async updateBlog(id: string, name: string, youtubeUrl: string): Promise<blogsType | boolean> {
         const result = await blogsCollection.updateOne({id}, {$set: {name, youtubeUrl}})
