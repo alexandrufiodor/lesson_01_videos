@@ -25,7 +25,7 @@ blogsRouter.get(`/:id`, async (req: Request, res: Response) => {
 blogsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) => {
     const isRemoved = await blogsRepository.removeBlog(req.params.id)
     if (isRemoved) {
-        res.status(204).send('No Content')
+        res.status(204)
         return;
     }
     res.sendStatus(404)
@@ -37,7 +37,7 @@ blogsRouter.post(`/`, authorization(), nameValidation, urlValidation, validation
 blogsRouter.put(`/:id`, authorization(), nameValidation, urlValidation, validationMiddleware, async (req: Request, res: Response) => {
     const isUpdated = await blogsRepository.updateBlog(req.params.id, req.body.name, req.body.youtubeUrl)
     if (isUpdated) {
-        res.status(204).send(isUpdated)
+        res.sendStatus(204)
         return
     }
     res.sendStatus(404)

@@ -37,7 +37,7 @@ postsRouter.get(`/:id`, async (req: Request, res: Response) => {
 postsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) => {
     const isRemoved = await postsRepository.removePost(req.params.id)
     if (isRemoved) {
-        res.status(204).send('No Content');
+        res.sendStatus(204);
         return;
     }
     res.sendStatus(404);
@@ -50,7 +50,7 @@ postsRouter.post(`/`, authorization(), titleValidation, contentValidation, short
 postsRouter.put(`/:id`, authorization(), titleValidation, contentValidation, shortDescriptionValidation, blogIdNotFoundValidation, validationMiddleware, async (req: Request, res: Response) => {
     const isUpdated = await postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
     if (isUpdated) {
-        res.status(204).send(isUpdated);
+        res.sendStatus(204);
         return;
     }
     res.sendStatus(404);

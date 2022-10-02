@@ -27,14 +27,14 @@ export const postsRepository = {
         return postsCollection.find(filter).toArray()
     },
     async findPostById(id: string): Promise<postsType | null> {
-        const result = await postsCollection.findOne({_id: new ObjectId(id)})
+        const result = await postsCollection.findOne({id})
         if (result) {
             return result
         }
         return null
     },
     async removePost(id: string): Promise<boolean> {
-        const result = await postsCollection.deleteOne({_id: new ObjectId(id)})
+        const result = await postsCollection.deleteOne({id})
         return result.deletedCount === 1
     },
     async addNewPost(title: string, shortDescription: string, content: string, blogId: string): Promise<postsType | null> {
@@ -51,13 +51,17 @@ export const postsRepository = {
             }
             const result = await postsCollection.insertOne(newPost)
             return newPost
-        } return null
+        } else {
+            return null
+        }
     },
     async updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string): Promise<boolean | null> {
         const blog = await blogsRepository.findBlogById(blogId)
         if (blog) {
-            const result = await postsCollection.updateOne({_id: new ObjectId(id)}, {$set: {title, shortDescription, content, blogId, blogName: blog.name}})
+            const result = await postsCollection.updateOne({id}, {$set: {title, shortDescription, content, blogId, blogName: blog.name}})
             return result.matchedCount === 1
-        } return null
+        } else {
+            return null
+        }
     }
 }
