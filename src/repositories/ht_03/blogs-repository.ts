@@ -25,6 +25,8 @@ export const blogsRepository = {
     async findBlogById(id: string): Promise<blogsType | null> {
         const result = await blogsCollection.findOne({id})
         if (result) {
+            //@ts-ignore
+            delete result["_id"]
             return result
         } else {
             return null
@@ -42,6 +44,8 @@ export const blogsRepository = {
             createdAt: new Date,
         }
         const result = await blogsCollection.insertOne(newBlog)
+        //@ts-ignore
+        delete newBlog["_id"]
         return newBlog
     },
     async updateBlog(id: string, name: string, youtubeUrl: string): Promise<boolean> {
