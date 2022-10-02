@@ -29,6 +29,8 @@ export const postsRepository = {
     async findPostById(id: string): Promise<postsType | null> {
         const result = await postsCollection.findOne({id})
         if (result) {
+            //@ts-ignore
+            delete result["_id"]
             return result
         }
         return null
@@ -50,6 +52,8 @@ export const postsRepository = {
                 createdAt: new Date,
             }
             const result = await postsCollection.insertOne(newPost)
+            //@ts-ignore
+            delete newPost["_id"]
             return newPost
         } else {
             return null
