@@ -25,8 +25,11 @@ export const postsRepository = {
             filter.title = {$regex: title}
         }
         const posts = await postsCollection.find(filter).toArray()
-        //@ts-ignore
-        return posts.map(post => delete post["_id"])
+        for (let i = 0; i < posts.length; i++) {
+            // @ts-ignore
+            delete posts[i]["_id"]
+        }
+        return posts
     },
     async findPostById(id: string): Promise<postsType | null> {
         const result = await postsCollection.findOne({id})
