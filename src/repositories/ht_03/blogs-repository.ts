@@ -34,10 +34,10 @@ export const blogsRepository = {
     },
     async addNewBlog(name: string, youtubeUrl: string): Promise<blogsType> {
         const newBlog = {
+            createdAt: new Date,
             id: (+(new Date)).toString(),
             name,
             youtubeUrl,
-            createdAt: new Date,
         }
         const result = await blogsCollection.insertOne(newBlog)
         //@ts-ignore

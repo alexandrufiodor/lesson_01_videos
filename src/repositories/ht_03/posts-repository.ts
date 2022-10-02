@@ -40,13 +40,13 @@ export const postsRepository = {
         const blog = await blogsRepository.findBlogById(blogId)
         if (blog) {
             const newPost = {
-                id: (+(new Date)).toString(),
-                title,
-                shortDescription,
-                content,
                 blogId,
                 blogName: blog.name,
+                id: (+(new Date)).toString(),
+                content,
                 createdAt: new Date,
+                title,
+                shortDescription,
             }
             const result = await postsCollection.insertOne(newPost)
             // return newPost
