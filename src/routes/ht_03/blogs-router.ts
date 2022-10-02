@@ -18,9 +18,9 @@ blogsRouter.get(`/:id`, async (req: Request, res: Response) => {
     const findBlog = await blogsRepository.findBlogById(req.params.id)
     if (findBlog) {
         res.status(200).send(findBlog)
-        return
+    } else {
+        res.sendStatus(404)
     }
-    res.sendStatus(404)
 })
 blogsRouter.delete(`/:id`, authorization(), async (req: Request, res: Response) => {
     const isRemoved = await blogsRepository.removeBlog(req.params.id)
