@@ -49,7 +49,9 @@ export const postsRepository = {
                 createdAt: new Date,
             }
             const result = await postsCollection.insertOne(newPost)
-            return newPost
+            // return newPost
+            //@ts-ignore
+            return {_id: result.insertedId, ...newPost}
         } return null
     },
     async updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string): Promise<boolean | null> {
