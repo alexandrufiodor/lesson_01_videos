@@ -24,7 +24,7 @@ export const postsRepository = {
         if (title) {
             filter.title = {$regex: title}
         }
-        return postsCollection.find({title: filter.title}).toArray()
+        return postsCollection.find(filter).toArray()
     },
     async findPostById(id: string): Promise<postsType | null> {
         const result = await postsCollection.findOne({_id: new ObjectId(id)})
