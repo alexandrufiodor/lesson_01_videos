@@ -19,7 +19,7 @@ export const blogsRepository = {
         if (name) {
             filter.name = {$regex: name}
         }
-        return blogsCollection.find(filter).toArray()
+        return blogsCollection.find({name: filter.name}).toArray()
     },
     async findBlogById(id: string): Promise<blogsType | null> {
         const result = await blogsCollection.findOne({id})
