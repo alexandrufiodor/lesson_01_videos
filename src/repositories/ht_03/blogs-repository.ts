@@ -1,4 +1,4 @@
-import {blogsCollection} from "./db";
+import {blogsCollection, postsCollection} from "./db";
 import {ObjectId} from "mongodb";
 
 export type blogsType = {
@@ -21,6 +21,9 @@ export const blogsRepository = {
             filter.name = {$regex: name}
         }
         return blogsCollection.find(filter).toArray()
+        const blogs = await blogsCollection.find(filter).toArray()
+        //@ts-ignore
+        return blogs.map(blog => delete blog["_id"])
     },
     async findBlogById(id: string): Promise<blogsType | null> {
         const result = await blogsCollection.findOne({id})
