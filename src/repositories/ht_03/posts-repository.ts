@@ -15,7 +15,7 @@ export const posts:Array<postsType> = []
 export const postsRepository = {
     async deleteAll(): Promise<boolean> {
         const result = await postsCollection.deleteMany({})
-        return result.deletedCount === 1
+        return true
     },
     async findPosts(title: string | null | undefined): Promise<postsType[]> {
         const filter: any = {}

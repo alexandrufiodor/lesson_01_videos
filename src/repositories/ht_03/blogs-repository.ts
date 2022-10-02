@@ -11,7 +11,7 @@ export const blogs:Array<blogsType> = []
 export const blogsRepository = {
     async deleteAll(): Promise<boolean> {
         const result = await blogsCollection.deleteMany({})
-        return result.deletedCount === 1
+        return true
     },
     async findBlogs(name: string | undefined | null): Promise<blogsType[]> {
         const filter: any = {}
