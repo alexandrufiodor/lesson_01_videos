@@ -24,7 +24,7 @@ const blogIdNotFoundValidation = body("blogId").custom(async (blogId: string) =>
 
 postsRouter.get(`/`, async (req: Request, res: Response) => {
     // @ts-ignore
-    const foundedPosts = await postsRepository.findPosts(req.query.searchNameTerm?.toString(), +req.query.pageNumber, +req.query.pageSize, req.query.sortBy, req.query.sortDirection)
+    const foundedPosts = await postsRepository.findPosts(req.query.searchNameTerm?.toString(), req.query.pageNumber, req.query.pageSize, req.query.sortBy, req.query.sortDirection)
     res.status(200).send(foundedPosts)
 })
 postsRouter.get(`/:id`, async (req: Request, res: Response) => {

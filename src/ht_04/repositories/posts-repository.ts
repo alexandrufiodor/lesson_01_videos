@@ -27,14 +27,14 @@
         const result = await postsCollection.deleteMany({})
         return true
     },
-    async findPosts(title: string | null | undefined, pageNumber: number, pageSize: number, sortBy: 'createdAt', sortDirection: 'asc'): Promise<postsType> {
+    async findPosts(title: string | null | undefined, pageNumber: string, pageSize: string, sortBy: 'createdAt', sortDirection: 'asc'): Promise<postsType> {
       const filter: any = {}
-      // debugger
       if (title) {
           filter.title = {$regex: title}
       }
-      const pageS = pageSize || 10
-      const pageN = pageNumber || 1
+      debugger
+      const pageS = parseInt(pageSize) || 1
+      const pageN = parseInt(pageNumber) || 10
       const sortDir = (sortDirection: string) => {
         if(sortDirection == 'asc') {
           return 1
