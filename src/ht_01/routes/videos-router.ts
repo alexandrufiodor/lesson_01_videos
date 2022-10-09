@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {videosRepository} from "../../repositories/ht_01/videos-repository";
+import {videosRepository} from "../repositories/videos-repository";
 import {validationMiddleware} from "../../middlewares/validation-middleware";
 import {body} from "express-validator";
 

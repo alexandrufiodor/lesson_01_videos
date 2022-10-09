@@ -3,8 +3,8 @@ import {validationMiddleware} from "../../middlewares/validation-middleware";
 import {body} from "express-validator";
 
 import {authorization} from "./users";
-import {postsRepository} from "../../repositories/ht_02/posts-repository";
-import {blogsRepository} from "../../repositories/ht_02/blogs-repository";
+import {postsRepository} from "../repositories/posts-repository";
+import {blogsRepository} from "../repositories/blogs-repository";
 
 export const postsRouter = Router()
 const titleValidation = body('title').exists().withMessage('Title is required').isString().withMessage('Title should be a string').trim().isLength({min: 1, max: 30}).withMessage('Title should be minim 1 and maxim 30 length');

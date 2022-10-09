@@ -1,6 +1,4 @@
-import {blogsCollection, postsCollection} from "./db";
-import {ObjectId} from "mongodb";
-import {videos} from "../ht_01/videos-repository";
+import {blogsCollection} from "./db";
 
 export type blogsType = {
     id: string,
@@ -21,10 +19,9 @@ export const blogsRepository = {
         if (name) {
             filter.name = {$regex: name}
         }
-        // return blogsCollection.find(filter).toArray()
         const blogs = await blogsCollection.find(filter).toArray()
         for (let i = 0; i < blogs.length; i++) {
-            // @ts-ignore
+            //@ts-ignore
             delete blogs[i]["_id"]
         }
         return blogs

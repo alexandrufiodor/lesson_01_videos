@@ -3,8 +3,8 @@ import {validationMiddleware} from "../../middlewares/validation-middleware";
 import {body} from "express-validator";
 
 import {authorization} from "./users";
-import {postsRepository} from "../../repositories/ht_03/posts-repository";
-import {blogsRepository} from "../../repositories/ht_03/blogs-repository";
+import {postsRepository} from "../repositories/posts-repository";
+import {blogsRepository} from "../repositories/blogs-repository";
 
 export const postsRouter = Router()
 const titleValidation = body('title').exists().withMessage('Title is required').isString().withMessage('Title should be a string').trim().isLength({min: 1, max: 30}).withMessage('Title should be minim 1 and maxim 30 length');
@@ -23,7 +23,8 @@ const blogIdNotFoundValidation = body("blogId").custom(async (blogId: string) =>
 })
 
 postsRouter.get(`/`, async (req: Request, res: Response) => {
-    const foundedPosts = await postsRepository.findPosts(req.query.title?.toString())
+    // @ts-ignore
+    const foundedPosts = await postsRepository.findPosts(req.query.searchNameTerm?.toString(), +req.query.pageNumber, +req.query.pageSize, req.query.sortBy, req.query.sortDirection)
     res.status(200).send(foundedPosts)
 })
 postsRouter.get(`/:id`, async (req: Request, res: Response) => {

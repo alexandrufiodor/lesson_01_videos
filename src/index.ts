@@ -1,13 +1,17 @@
 import express from "express";
 import bodyParser from "body-parser";
-import {videosRouter} from "./routes/ht_01/videos-router";
-import {dataRouter} from "./routes/ht_01/clear-data-router";
-import {blogsRouter} from "./routes/ht_02/blogs-router";
-import {postsRouter} from "./routes/ht_02/posts-router";
-import {blogsRouter as blogsRouter_03} from "./routes/ht_03/blogs-router";
-import {postsRouter as postsRouter_03} from "./routes/ht_03/posts-router";
-import {dataRouter as dataRouter_03} from "./routes/ht_03/clear-data-router";
-import {runDb} from "./repositories/ht_03/db";
+import {videosRouter} from "./ht_01/routes/videos-router";
+import {dataRouter} from "./ht_01/routes/clear-data-router";
+import {blogsRouter} from "./ht_02/routes/blogs-router";
+import {postsRouter} from "./ht_02/routes/posts-router";
+import {blogsRouter as blogsRouter_03} from "./ht_03/routes/blogs-router";
+import {postsRouter as postsRouter_03} from "./ht_03/routes/posts-router";
+import {dataRouter as dataRouter_03} from "./ht_03/routes/clear-data-router";
+
+import {blogsRouter as blogsRouter_04} from "./ht_04/routes/blogs-router";
+import {postsRouter as postsRouter_04} from "./ht_04/routes/posts-router";
+import {dataRouter as dataRouter_04} from "./ht_04/routes/clear-data-router";
+import {runDb} from "./ht_03/repositories/db";
 
 export const app = express()
 const port = process.env.PORT || 3000
@@ -25,6 +29,10 @@ app.use('/ht_02/api/testing', dataRouter)
 app.use('/ht_03/api/blogs', blogsRouter_03)
 app.use('/ht_03/api/posts', postsRouter_03)
 app.use('/ht_03/api/testing', dataRouter_03)
+
+app.use('/ht_04/api/blogs', blogsRouter_04)
+app.use('/ht_04/api/posts', postsRouter_04)
+app.use('/ht_04/api/testing', dataRouter_04)
 
 const startApp = async () => {
     await runDb();

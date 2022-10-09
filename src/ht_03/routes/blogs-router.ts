@@ -2,7 +2,7 @@ import {Request, Response, Router} from "express";
 import {body} from "express-validator";
 
 import {validationMiddleware} from "../../middlewares/validation-middleware";
-import {blogsRepository} from "../../repositories/ht_03/blogs-repository";
+import {blogsRepository} from "../repositories/blogs-repository";
 import {authorization} from "./users";
 
 export const blogsRouter = Router()
